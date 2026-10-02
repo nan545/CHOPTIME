@@ -1,0 +1,6 @@
+{
+  "name": "ChopTime Ghana - Food Delivery",
+  "description": "Production-ready on-demand food delivery platform connecting customers, restaurants, delivery riders, and administrators in Ghana.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

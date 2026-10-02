@@ -1,0 +1,66 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == "nharnharquophi19@gmail.com" ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    // Default catch-all
+    match /{document=**} {
+      allow read, write: if true;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Restaurants
+    match /restaurants/{restaurantId} {
+      allow read, write: if true;
+    }
+
+    // Food Items
+    match /foodItems/{foodItemId} {
+      allow read, write: if true;
+    }
+
+    // Orders
+    match /orders/{orderId} {
+      allow read, write: if true;
+    }
+
+    // Reviews
+    match /reviews/{reviewId} {
+      allow read, write: if true;
+    }
+
+    // Notifications
+    match /notifications/{notificationId} {
+      allow read, write: if true;
+    }
+
+    // Coupons
+    match /coupons/{couponId} {
+      allow read, write: if true;
+    }
+
+    // Favorites
+    match /favorites/{favoriteId} {
+      allow read, write: if true;
+    }
+
+    // Platform Settings
+    match /platformSettings/{settingId} {
+      allow read, write: if true;
+    }
+  }
+}

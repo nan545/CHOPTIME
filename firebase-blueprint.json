@@ -1,0 +1,217 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role-based access for customer, restaurant owner, rider, or administrator.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "role": { "type": "string", "enum": ["customer", "restaurant", "rider", "admin"] },
+        "avatarUrl": { "type": "string" },
+        "restaurantId": { "type": "string" },
+        "riderApprovalStatus": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "vehicleType": { "type": "string" },
+        "licenseNumber": { "type": "string" },
+        "isOnline": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Restaurant": {
+      "title": "Restaurant",
+      "description": "Restaurant establishment profile and operations.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "type": "string" },
+        "city": { "type": "string" },
+        "neighborhood": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "coverImageUrl": { "type": "string" },
+        "rating": { "type": "number" },
+        "reviewCount": { "type": "number" },
+        "deliveryFee": { "type": "number" },
+        "estimatedDeliveryMin": { "type": "number" },
+        "estimatedDeliveryMax": { "type": "number" },
+        "minOrder": { "type": "number" },
+        "isOpen": { "type": "boolean" },
+        "openingHours": { "type": "string" },
+        "cuisineType": { "type": "string" },
+        "isVerified": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "ownerId", "name", "phone", "address", "city"]
+    },
+    "FoodItem": {
+      "title": "FoodItem",
+      "description": "Menu item belonging to a restaurant.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "restaurantId": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "categoryName": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "imageUrl": { "type": "string" },
+        "isAvailable": { "type": "boolean" },
+        "isPopular": { "type": "boolean" },
+        "options": { "type": "string" },
+        "addons": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "restaurantId", "name", "price"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer food delivery order with real-time lifecycle tracking.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "restaurantId": { "type": "string" },
+        "restaurantName": { "type": "string" },
+        "restaurantAddress": { "type": "string" },
+        "restaurantPhone": { "type": "string" },
+        "riderId": { "type": "string" },
+        "riderName": { "type": "string" },
+        "riderPhone": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "deliveryFee": { "type": "number" },
+        "serviceFee": { "type": "number" },
+        "discount": { "type": "number" },
+        "total": { "type": "number" },
+        "status": {
+          "type": "string",
+          "enum": [
+            "PENDING_PAYMENT",
+            "PAID",
+            "CONFIRMED",
+            "PREPARING",
+            "READY_FOR_PICKUP",
+            "RIDER_ASSIGNED",
+            "PICKED_UP",
+            "OUT_FOR_DELIVERY",
+            "DELIVERED",
+            "CANCELLED"
+          ]
+        },
+        "paymentMethod": { "type": "string" },
+        "paymentStatus": { "type": "string", "enum": ["PENDING", "PROCESSING", "SUCCESS", "FAILED"] },
+        "paymentReference": { "type": "string" },
+        "deliveryAddress": { "type": "string" },
+        "deliveryNotes": { "type": "string" },
+        "couponCode": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "orderNumber", "customerId", "restaurantId", "total", "status"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Customer review and rating for an order and restaurant.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderId": { "type": "string" },
+        "restaurantId": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "orderId", "restaurantId", "customerId", "rating"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "System and order alerts for users.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string" },
+        "orderId": { "type": "string" },
+        "isRead": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "message"]
+    },
+    "Coupon": {
+      "title": "Coupon",
+      "description": "Promotional discounts for Ghana food delivery orders.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string" },
+        "discountType": { "type": "string", "enum": ["percentage", "fixed"] },
+        "discountValue": { "type": "number" },
+        "minOrder": { "type": "number" },
+        "maxDiscount": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "usageCount": { "type": "number" }
+      },
+      "required": ["id", "code", "discountType", "discountValue"]
+    },
+    "Favorite": {
+      "title": "Favorite",
+      "description": "User saved favorite restaurant or food.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "restaurantId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "restaurantId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User account profiles."
+    },
+    "/restaurants/{restaurantId}": {
+      "schema": { "$ref": "#/entities/Restaurant" },
+      "description": "Restaurant establishment documents."
+    },
+    "/foodItems/{foodItemId}": {
+      "schema": { "$ref": "#/entities/FoodItem" },
+      "description": "Individual food menu dishes."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Food delivery orders and statuses."
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Customer order reviews."
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "User alerts and notifications."
+    },
+    "/coupons/{couponId}": {
+      "schema": { "$ref": "#/entities/Coupon" },
+      "description": "Discount coupon codes."
+    },
+    "/favorites/{favoriteId}": {
+      "schema": { "$ref": "#/entities/Favorite" },
+      "description": "Customer saved favorite restaurants."
+    }
+  }
+}
